@@ -1,0 +1,29 @@
+# Draft: add maintainer identity after creating an AUR account.
+pkgname=and-music-bin
+pkgver=1.0.0
+pkgrel=1
+pkgdesc='AND Music desktop music player'
+arch=('x86_64')
+url='https://github.com/0-nerop-0/and-music'
+license=('MIT')
+depends=('glibc' 'gtk3' 'nss' 'alsa-lib' 'libxss')
+provides=('and-music')
+conflicts=('and-music')
+options=('!strip')
+_archive="and-music-${pkgver}-linux-x86_64.tar.zst"
+source_x86_64=("${_archive}::${url}/releases/download/v${pkgver}/${_archive}")
+source=('and-music.desktop' "LICENSE::${url}/releases/download/v${pkgver}/LICENSE")
+sha256sums=('37824d282c52389d8c7a77af49ec435a6b12cff600ed69a3ce82ff8ce34f9cb9'
+            'a569ea83bccb5e89eb00b8c3ebf644fc1250946072e64ab8a2a0fadd97ce0562')
+sha256sums_x86_64=('1f78282cd58f466325b6a08ad7c3b99d7b133b6e200b90e2512c06ea38a4f080')
+
+package() {
+  install -d "$pkgdir/opt/and-music"
+  cp -R --preserve=mode,timestamps "$srcdir/and-music/." "$pkgdir/opt/and-music/"
+  chmod 4755 "$pkgdir/opt/and-music/chrome-sandbox"
+  install -d "$pkgdir/usr/bin"
+  ln -s /opt/and-music/and-music "$pkgdir/usr/bin/and-music"
+  install -Dm644 "$srcdir/and-music.desktop" "$pkgdir/usr/share/applications/and-music.desktop"
+  install -Dm644 "$srcdir/and-music/resources/icon.png" "$pkgdir/usr/share/icons/hicolor/256x256/apps/and-music.png"
+  install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/and-music/LICENSE"
+}
