@@ -1,0 +1,31 @@
+appId: com.andmusic.desktop
+productName: AND Music
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - out/**/*
+  - package.json
+  - node_modules/**/*
+  - '!node_modules/**/{test,tests,__tests__,example,examples,docs}/**'
+  - '!node_modules/**/*.{md,map}'
+extraResources:
+  - from: resources/icon.ico
+    to: icon.ico
+  - from: resources/icon.png
+    to: icon.png
+win:
+  target: nsis
+  icon: resources/icon.ico
+  signAndEditExecutable: false
+linux:
+  target: AppImage
+  icon: resources/icon.png
+  category: AudioVideo
+nsis:
+  oneClick: false
+  perMachine: true
+  allowToChangeInstallationDirectory: true
+  artifactName: '(&) Music Setup ${version}.${ext}'
+  shortcutName: '(&) Music'
+  differentialPackage: false

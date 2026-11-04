@@ -1,0 +1,282 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+[role='button']:focus-visible {
+  outline: 2px solid #d0bcff;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-motion='system'] *,
+  [data-motion='system'] *::before,
+  [data-motion='system'] *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+[data-motion='off'] *,
+[data-motion='off'] *::before,
+[data-motion='off'] *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+[data-motion='on'] .settings-panel,
+[data-motion='system'] .settings-panel {
+  animation: settings-enter 180ms ease-out both;
+}
+
+@keyframes settings-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a4458;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5a5468;
+}
+
+/* Custom range slider (used for volume) — заменяет "кривой" нативный виджет Chromium */
+input[type='range'].app-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
+  height: 16px;           /* фиксированная высота — thumb центрируется относительно неё */
+  margin: 0;
+  padding: 0;
+  background: transparent !important; /* заливку прогресса рисует ::-webkit-slider-runnable-track через var(--slider-progress) */
+  outline: none;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* Chrome / Edge / Electron (Blink) */
+input[type='range'].app-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    #d0bcff 0%,
+    #d0bcff var(--slider-progress, 0%),
+    rgba(255, 255, 255, 0.12) var(--slider-progress, 0%),
+    rgba(255, 255, 255, 0.12) 100%
+  );
+}
+
+input[type='range'].app-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #d0bcff;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  /* Центрируем thumb (13px) относительно track (4px) внутри инпута высотой 16px */
+  margin-top: calc((4px - 13px) / 2);
+}
+
+input[type='range'].app-slider:hover::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
+/* Firefox */
+input[type='range'].app-slider::-moz-range-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+input[type='range'].app-slider::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #d0bcff;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+input[type='range'].app-slider::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: #d0bcff;
+}
+
+/* Player transport buttons — CSS hover вместо ручного onMouseEnter/onMouseLeave */
+.player-btn {
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.player-btn:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.player-btn:active {
+  transform: scale(0.95);
+}
+
+[data-theme='light'] main .player-btn {
+  color: rgba(29, 25, 37, 0.75);
+}
+
+[data-theme='light'] main .player-btn:hover {
+  color: #211e29;
+}
+
+/* The cover grows from the mini player; controls follow after the cover starts moving. */
+.now-playing-overlay {
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+
+.now-playing-overlay[data-expanded='true'] {
+  opacity: 1;
+}
+
+.now-playing-cover {
+  border-radius: 10px;
+  transform: var(--cover-start-transform, translate3d(0, 24px, 0) scale(0.92));
+  transform-origin: center;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), border-radius 420ms ease;
+  will-change: transform;
+}
+
+.now-playing-overlay[data-expanded='true'] .now-playing-cover {
+  border-radius: 16px;
+  transform: none;
+}
+
+.now-playing-close,
+.now-playing-details {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 260ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.now-playing-overlay[data-expanded='true'] .now-playing-close,
+.now-playing-overlay[data-expanded='true'] .now-playing-details {
+  opacity: 1;
+  transform: none;
+  transition-delay: 100ms;
+}
+
+.track-swap-layer {
+  position: absolute;
+  inset: 0;
+  min-width: 0;
+}
+
+.track-swap-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.track-swap-in {
+  animation: track-swap-in 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.track-swap-out {
+  pointer-events: none;
+  animation: track-swap-out 340ms ease-in both;
+}
+
+.mini-track-enter {
+  animation: mini-track-enter 240ms ease-out both;
+}
+
+@keyframes track-swap-in {
+  from { opacity: 0; transform: translateX(var(--track-enter-x, 44px)) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes track-swap-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateX(var(--track-exit-x, -44px)) scale(0.96); }
+}
+
+@keyframes mini-track-enter {
+  from { opacity: 0; transform: translateX(var(--track-enter-x, 18px)); }
+  to { opacity: 1; transform: none; }
+}
+
+[data-motion='off'] .now-playing-overlay,
+[data-motion='off'] .now-playing-cover,
+[data-motion='off'] .now-playing-close,
+[data-motion='off'] .now-playing-details {
+  transition: none !important;
+  transition-delay: 0ms !important;
+}
+
+[data-motion='off'] .track-swap-in,
+[data-motion='off'] .track-swap-out,
+[data-motion='off'] .mini-track-enter {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-motion='system'] .now-playing-overlay,
+  [data-motion='system'] .now-playing-cover,
+  [data-motion='system'] .now-playing-close,
+  [data-motion='system'] .now-playing-details {
+    transition: none !important;
+    transition-delay: 0ms !important;
+  }
+
+  [data-motion='system'] .track-swap-in,
+  [data-motion='system'] .track-swap-out,
+  [data-motion='system'] .mini-track-enter {
+    animation: none !important;
+  }
+}
