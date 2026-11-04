@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=AND Music
+Comment=Music player
+Exec=/usr/bin/and-music %U
+Icon=and-music
+Terminal=false
+Categories=AudioVideo;Audio;Player;
+StartupWMClass=AND Music

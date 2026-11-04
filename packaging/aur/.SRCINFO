@@ -1,0 +1,23 @@
+pkgbase = and-music-bin
+	pkgdesc = AND Music desktop music player
+	pkgver = 1.0.0
+	pkgrel = 1
+	url = https://github.com/0-nerop-0/and-music
+	arch = x86_64
+	license = MIT
+	depends = glibc
+	depends = gtk3
+	depends = nss
+	depends = alsa-lib
+	depends = libxss
+	provides = and-music
+	conflicts = and-music
+	options = !strip
+	source = and-music.desktop
+	source = LICENSE::https://github.com/0-nerop-0/and-music/releases/download/v1.0.0/LICENSE
+	sha256sums = 37824d282c52389d8c7a77af49ec435a6b12cff600ed69a3ce82ff8ce34f9cb9
+	sha256sums = a569ea83bccb5e89eb00b8c3ebf644fc1250946072e64ab8a2a0fadd97ce0562
+	source_x86_64 = and-music-1.0.0-linux-x86_64.tar.zst::https://github.com/0-nerop-0/and-music/releases/download/v1.0.0/and-music-1.0.0-linux-x86_64.tar.zst
+	sha256sums_x86_64 = 1f78282cd58f466325b6a08ad7c3b99d7b133b6e200b90e2512c06ea38a4f080
+
+pkgname = and-music-bin
