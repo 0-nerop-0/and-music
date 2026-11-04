@@ -44,4 +44,10 @@ Linux AppImage собирается командой `npm run dist:linux` в п�
 - `resources/icon.ico` и `resources/icon.png` — иконки Windows и Linux.
 - `out` и `dist` — генерируемые файлы, исключённые из репозитория.
 
-Дополнительные заметки о дизайне и планах находятся в `DESIGN_REFERENCE.md` и `TODO.md`. Ранние документы проекта сохранены в `docs/legacy`.
+Дополнительные заметки о дизайне и планах находятся в `DESIGN_REFERENCE.md` и `TODO.md`.
+
+## Скачать
+
+Готовые установщики для Windows и Linux доступны в [релизе v1.0.0](https://github.com/0-nerop-0/and-music/releases/tag/v1.0.0). Для Arch Linux используйте пакет `and-music-bin-1.0.0-1-x86_64.pkg.tar.zst` или установщик `.bin`.
+
+Исходный код распространяется по лицензии MIT — см. `LICENSE`.
