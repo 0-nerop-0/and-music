@@ -1,0 +1,23 @@
+name: Import source tree
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract and commit project files
+        run: |
+          tar -xzf and-music-source-upload.tar.gz
+          rm and-music-source-upload.tar.gz
+          rm .github/workflows/import-source.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Import AND Music source tree"
+          git push
