@@ -20,7 +20,11 @@
 
 ### Настройки оформления
 
-![Настройки тем, GIF-обоев и вписывания изображения в окно](docs/screenshots/appearance-wallpaper.png)
+![Настройки встроенных обоев и их видимости](docs/screenshots/appearance-wallpaper.jpg)
+
+### Первый запуск
+
+![Пустая библиотека (&) Music с выбранными обоями](docs/screenshots/library-empty.jpg)
 
 ## Разработка
 
